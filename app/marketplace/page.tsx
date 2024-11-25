@@ -10,6 +10,13 @@ import {
     CardTitle,
     CardDescription,
 } from "@/components/ui/card";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import ItemDetail from "@/components/marketplace/ItemDetail";
 
 export type Item = {
@@ -31,12 +38,19 @@ export default function MarketPlace() {
     const [loading, setLoading] = useState(false); // Loading state for infinite scroll
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [searchQuery, setSearchQuery] = useState(""); // State for search query
+    const [sortOption, setSortOption] = useState<"asc" | "desc">("asc"); // Sorting option
 
     // search for item name and description
-    const filteredItems = items.filter((item) =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredItems = items
+        .filter((item) =>
+            item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.description.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .sort((a, b) => {
+            const priceA = parseFloat(a.price.replace("$", ""));
+            const priceB = parseFloat(b.price.replace("$", ""));
+            return sortOption === "asc" ? priceA - priceB : priceB - priceA;
+        });
 
     const fetchMoreItems = () => {
         setLoading(true);
@@ -84,8 +98,8 @@ export default function MarketPlace() {
                 />
             ) : (
                 <>
-                    {/* Search Bar */}
-                    <div className="flex items-center mb-6">
+                    {/* Search Bar and Sorting */}
+                    <div className="flex items-center justify-between mb-6">
                         <Input
                             type="text"
                             placeholder="Search"
@@ -93,6 +107,24 @@ export default function MarketPlace() {
                             onChange={(e) => setSearchQuery(e.target.value)} // Update search query
                             className="rounded-full"
                         />
+                        <Select
+                            onValueChange={(value) =>
+                                setSortOption(value as "asc" | "desc")
+                            }
+                            value={sortOption}
+                        >
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Sort by Price" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="asc">
+                                    Price: Low to High
+                                </SelectItem>
+                                <SelectItem value="desc">
+                                    Price: High to Low
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                     {/* Item list */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
