@@ -21,15 +21,22 @@ export type Item = {
 };
 
 const initialItems: Item[] = [
-    { id: 1, name: "Chair", price: "$50", image: "/images/table.jpeg", description: "a chair" },
-    { id: 2, name: "Desk", price: "$20", image: "/images/chair.jpeg", description: "a desk" },
-    { id: 3, name: "Couch", price: "$80", image: "/images/sofa.jpeg", description: "a couch" },
+    { id: 1, name: "Table", price: "$40", image: "/images/table.jpeg", description: "a table" },
+    { id: 2, name: "Chair", price: "$20", image: "/images/chair.jpeg", description: "a chair" },
+    { id: 3, name: "Couch", price: "$120", image: "/images/sofa.jpeg", description: "a couch" },
 ];
 
 export default function MarketPlace() {
     const [items, setItems] = useState(initialItems); // State for items
     const [loading, setLoading] = useState(false); // Loading state for infinite scroll
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+    const [searchQuery, setSearchQuery] = useState(""); // State for search query
+
+    // search for item name and description
+    const filteredItems = items.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const fetchMoreItems = () => {
         setLoading(true);
@@ -40,14 +47,14 @@ export default function MarketPlace() {
                 {
                     id: prevItems.length + 1,
                     name: "TV Stand",
-                    price: "$15",
+                    price: "$60",
                     image: "/images/tvstand.jpeg",
                     description: "a tv stand",
                 },
                 {
                     id: prevItems.length + 2,
                     name: "Bed",
-                    price: "$30",
+                    price: "$90",
                     image: "/images/bed.jpeg",
                     description: "a bed",
                 },
@@ -79,11 +86,17 @@ export default function MarketPlace() {
                 <>
                     {/* Search Bar */}
                     <div className="flex items-center mb-6">
-                        <Input type="text" placeholder="Search" className="rounded-full" />
+                        <Input
+                            type="text"
+                            placeholder="Search"
+                            value={searchQuery} // Controlled input
+                            onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+                            className="rounded-full"
+                        />
                     </div>
                     {/* Item list */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {items.map((item) => (
+                        {filteredItems.map((item) => (
                             <Card
                                 key={item.id}
                                 onClick={() => setSelectedItem(item)}
