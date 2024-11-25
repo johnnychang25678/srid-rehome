@@ -17,6 +17,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import ItemDetail from "@/components/marketplace/ItemDetail";
 
 export type Item = {
@@ -39,6 +40,7 @@ export default function MarketPlace() {
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [searchQuery, setSearchQuery] = useState(""); // State for search query
     const [sortOption, setSortOption] = useState<"asc" | "desc">("asc"); // Sorting option
+    const [showBackToTop, setShowBackToTop] = useState(false); // State for "Back to Top" button visibility
 
     // search for item name and description
     const filteredItems = items
@@ -52,6 +54,7 @@ export default function MarketPlace() {
             return sortOption === "asc" ? priceA - priceB : priceB - priceA;
         });
 
+    // functions
     const fetchMoreItems = () => {
         setLoading(true);
         // setTimeout is used to fake api call delay
@@ -77,6 +80,11 @@ export default function MarketPlace() {
         }, 1500);
     };
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    // useEffects
     useEffect(() => {
         const handleScroll = () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !loading) {
@@ -88,6 +96,18 @@ export default function MarketPlace() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, [loading, items.length]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 300) {
+                setShowBackToTop(true);
+            } else {
+                setShowBackToTop(false);
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     return (
         <div className="p-4 max-w-6xl mx-auto">
@@ -163,6 +183,15 @@ export default function MarketPlace() {
                         <div className="text-center mt-6">
                             <p className="text-gray-500">Loading...</p>
                         </div>
+                    )}
+                    {/* Back to Top Button */}
+                    {showBackToTop && (
+                        <Button
+                            onClick={scrollToTop}
+                            className="fixed bottom-4 right-4 bg-black text-white hover:bg-gray-700 rounded-full p-4 shadow-lg"
+                        >
+                            ↑
+                        </Button>
                     )}
                 </>
             )}
