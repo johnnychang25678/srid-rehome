@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="min-h-screen flex flex-col">
             {/* Navbar */}
-            <header className="bg-white shadow p-4">
+            <header className="sticky top-0 z-50 bg-white shadow p-4">
                 <div className="flex justify-between items-center max-w-6xl mx-auto">
                     <Link href="/" className="text-black text-lg font-bold hover:underline focus:outline-none">
                         ReHome

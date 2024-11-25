@@ -40,7 +40,6 @@ export default function MarketPlace() {
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [searchQuery, setSearchQuery] = useState(""); // State for search query
     const [sortOption, setSortOption] = useState<"asc" | "desc">("asc"); // Sorting option
-    const [showBackToTop, setShowBackToTop] = useState(false); // State for "Back to Top" button visibility
 
     // search for item name and description
     const filteredItems = items
@@ -80,8 +79,8 @@ export default function MarketPlace() {
         }, 1500);
     };
 
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+    const scrollToTop = (behavior: ScrollBehavior) => {
+        window.scrollTo({ top: 0, behavior: behavior });
     };
 
     // useEffects
@@ -97,17 +96,6 @@ export default function MarketPlace() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [loading, items.length]);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 300) {
-                setShowBackToTop(true);
-            } else {
-                setShowBackToTop(false);
-            }
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
 
     return (
         <div className="p-4 max-w-6xl mx-auto">
@@ -151,7 +139,11 @@ export default function MarketPlace() {
                         {filteredItems.map((item) => (
                             <Card
                                 key={item.id}
-                                onClick={() => setSelectedItem(item)}
+                                onClick={() => {
+                                    setSelectedItem(item);
+                                    scrollToTop("instant");
+                                }
+                                }
                                 className="hover:shadow-md transition"
                             >
                                 <CardHeader>
@@ -178,6 +170,7 @@ export default function MarketPlace() {
                             </Card>
                         ))}
                     </div>
+                    <div className="m-3"></div>
                     {/* Loading Indicator */}
                     {loading && (
                         <div className="text-center mt-6">
@@ -185,14 +178,12 @@ export default function MarketPlace() {
                         </div>
                     )}
                     {/* Back to Top Button */}
-                    {showBackToTop && (
-                        <Button
-                            onClick={scrollToTop}
-                            className="fixed bottom-4 right-4 bg-black text-white hover:bg-gray-700 rounded-full p-4 shadow-lg"
-                        >
-                            ↑
-                        </Button>
-                    )}
+                    <Button
+                        onClick={() => scrollToTop("smooth")}
+                        className="fixed bottom-4 right-4 bg-black text-white hover:bg-gray-700 rounded-full p-4 shadow-lg z-50"
+                    >
+                        ↑
+                    </Button>
                 </>
             )}
         </div>
