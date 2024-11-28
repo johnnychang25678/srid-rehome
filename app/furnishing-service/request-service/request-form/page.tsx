@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +16,11 @@ import Link from "next/link";
 const formSchema = z.object({
     address: z.string().min(1, "Property address is required"),
     propertyType: z.string().min(1, "Property type is required"),
-    moveInDate: z.string().min(1, "Move-in date is required"),
+    moveInDate: z.string()
+        .refine(
+            (value) => new Date(value) >= new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+            "Move-in date is required"
+        ),
     mobile: z.string().min(1, "Mobile number is required")
         .regex(
             /^\d{3}-\d{3}-\d{4}$/,
@@ -38,6 +42,7 @@ const formatPhoneNumber = (value: string) => {
 type FormValues = z.infer<typeof formSchema>;
 
 export default function RequestForm() {
+    const [selectedOrders, setSelectedOrders] = useState([]); // For displaying selected orders
     const [isSubmitted, setIsSubmitted] = useState(false); // For showing confirmation box
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
@@ -50,13 +55,38 @@ export default function RequestForm() {
         },
     });
 
+    useEffect(() => {
+        // Retrieve selected orders from localStorage
+        const storedSelectedOrders = localStorage.getItem("selectedOrders");
+        if (storedSelectedOrders) {
+            setSelectedOrders(JSON.parse(storedSelectedOrders));
+        }
+    }, []);
+
+    // Calculate the minimum date (3 days from today)
+    const calculateMinDate = () => {
+        const date = new Date();
+        date.setDate(date.getDate() + 3); // Add 3 days
+        return date.toISOString().split("T")[0]; // Format as yyyy-mm-dd
+    };
+
+    const [minDate] = useState<string>(calculateMinDate());
+
     const onSubmit = (data: FormValues) => {
+        const requestWithOrders = {
+            ...data,
+            requestDate: new Date().toISOString().split("T")[0],
+            status: "Pending",
+            selectedOrders, // Include selected orders in the request
+        };
+
         // Retrieve existing requests from localStorage
         const existingRequests = JSON.parse(localStorage.getItem("furnishingRequests") || "[]");
 
         // Add the new request
-        const updatedRequests = [...existingRequests, data];
+        const updatedRequests = [...existingRequests, requestWithOrders];
         localStorage.setItem("furnishingRequests", JSON.stringify(updatedRequests));
+        localStorage.removeItem("selectedOrders");
 
         // Show confirmation box
         setIsSubmitted(true);
@@ -113,9 +143,16 @@ export default function RequestForm() {
                                     control={form.control}
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Move-in Date (yyyy/mm/dd)*</FormLabel>
+                                            <div className="flex flex-col">
+                                                <FormLabel>
+                                                    Move-in Date (yyyy/mm/dd)*
+                                                </FormLabel>
+                                                <FormLabel>
+                                                    (Must be at least 3 days from today)
+                                                </FormLabel>
+                                            </div>
                                             <FormControl>
-                                                <Input type="date" {...field} />
+                                                <Input type="date" min={minDate} {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -164,7 +201,7 @@ export default function RequestForm() {
                         </Form>
                         {/* Back Button */}
                         <Link href="/furnishing-service/request-service" passHref>
-                            <Button variant="ghost" className="w-full mt-4">
+                            <Button variant="secondary" className="w-full mt-4">
                                 Back
                             </Button>
                         </Link>
