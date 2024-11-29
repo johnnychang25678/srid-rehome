@@ -73,7 +73,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <form className="mt-6">
               <div className="mt-10 flex">
                 <Link
-                  href={`/marketplace/${item.id}`}
+                  href="/cart"
                   className={`${buttonVariants()} flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full`}
                 >
                   Add to bag
