@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Card,
@@ -8,10 +11,27 @@ import {
 } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import { mockItems } from "@/lib/data";
 import Link from "next/link";
+import { getCart, getItemById } from "@/lib/utils";
 
 export default function Page() {
+  const [cart, setCart] = useState<Record<number, number>>({});
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    const savedCart = getCart();
+    setCart(savedCart);
+  }, []);
+
+  useEffect(() => {
+    let price = 0;
+    Object.entries(cart).forEach(([id, quantity]) => {
+      const item = getItemById(parseInt(id))!;
+      price += item.price * quantity;
+    });
+    setPrice(price);
+  }, [cart]);
+
   return (
     <div className="bg-white">
       <div className="max-w-2xl px-4">
@@ -24,30 +44,35 @@ export default function Page() {
 
         <form>
           <section aria-labelledby="cart-heading">
-            {mockItems.map((item) => (
-              <Link href={`/marketplace/${item.id}`} key={item.id}>
-                <Card className="mt-4">
-                  <CardHeader>
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      width={300}
-                      height={160}
-                      className="w-full h-40 object-cover rounded-md"
-                    />
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="mb-2">
-                      {item.name}
-                    </CardDescription>
-                    <CardTitle className="flex justify-between">
-                      <span>{item.price}</span>
-                      <span>x1</span>
-                    </CardTitle>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+            {Object.entries(cart).map(([id, quantity]) => {
+              if (quantity === 0) return null;
+              const item = getItemById(parseInt(id));
+              if (!item) return null;
+              return (
+                <Link href={`/marketplace/${item.id}`} key={item.id}>
+                  <Card className="mt-4">
+                    <CardHeader>
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={300}
+                        height={160}
+                        className="w-full h-40 object-cover rounded-md"
+                      />
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="mb-2">
+                        {item.name}
+                      </CardDescription>
+                      <CardTitle className="flex justify-between">
+                        <span>${item.price}</span>
+                        <span>x{quantity}</span>
+                      </CardTitle>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
           </section>
 
           {/* Order summary */}
@@ -59,7 +84,7 @@ export default function Page() {
                     Subtotal
                   </dt>
                   <dd className="ml-4 text-base font-bold text-gray-900">
-                    $180.00
+                    ${price}
                   </dd>
                 </div>
               </dl>
@@ -67,7 +92,7 @@ export default function Page() {
 
             <div className="mt-4">
               <Link
-                href="/cart/checkout"
+                href="/marketplace/cart/checkout"
                 className={`${buttonVariants()} w-full rounded-md border border-transparent px-4 py-3 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50`}
               >
                 Checkout

@@ -7,7 +7,7 @@ export type QuestionAnswer = {
 export type Item = {
   id: number;
   name: string;
-  price: string; // Use string if price includes symbols like "$"
+  price: number;
   image: string; // Path to the item's image
   description: string;
   verified: boolean;

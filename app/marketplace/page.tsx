@@ -35,8 +35,8 @@ export default function MarketPlace() {
         item.description.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .sort((a, b) => {
-      const priceA = parseFloat(a.price.replace("$", ""));
-      const priceB = parseFloat(b.price.replace("$", ""));
+      const priceA = a.price;
+      const priceB = b.price;
       return sortOption === "asc" ? priceA - priceB : priceB - priceA;
     });
 
@@ -116,7 +116,7 @@ export default function MarketPlace() {
                     {item.name}
                   </CardTitle>
                   <CardDescription className="text-gray-500">
-                    {item.price}
+                    ${item.price}
                   </CardDescription>
                   <CardDescription className="text-gray-500">
                     {item.description}

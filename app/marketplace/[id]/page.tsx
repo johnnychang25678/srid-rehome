@@ -1,5 +1,7 @@
 "use client";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { HeartIcon } from "@heroicons/react/24/solid";
@@ -9,10 +11,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getItemById } from "@/lib/data";
-import Link from "next/link";
+import { getItemById } from "@/lib/utils";
+import { getCart, storeCart } from "@/lib/utils";
 
 export default function Page({ params }: { params: { id: string } }) {
   const itemId = parseInt(params.id, 10);
@@ -21,7 +23,15 @@ export default function Page({ params }: { params: { id: string } }) {
     notFound();
   }
 
+  const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(false);
+
+  function addCartItem() {
+    const cart = getCart();
+    cart[itemId] = (cart[itemId] || 0) + 1;
+    storeCart(cart);
+    router.push("/marketplace/cart");
+  }
 
   return (
     <div className="bg-white">
@@ -57,7 +67,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <div className="mt-3">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                {item.price}
+                ${item.price}
               </p>
             </div>
 
@@ -72,12 +82,13 @@ export default function Page({ params }: { params: { id: string } }) {
 
             <form className="mt-6">
               <div className="mt-10 flex">
-                <Link
-                  href="/cart"
-                  className={`${buttonVariants()} flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full`}
+                <Button
+                  type="button"
+                  onClick={addCartItem}
+                  className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                 >
                   Add to bag
-                </Link>
+                </Button>
 
                 <Button
                   type="button"

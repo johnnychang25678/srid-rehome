@@ -1,3 +1,5 @@
+"use client";
+
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -19,8 +21,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import { getCart, storeCart, storeOrders } from "@/lib/utils";
 
 export default function Page() {
+  function handleSubmit() {
+    const savedCart = getCart();
+    storeOrders(savedCart);
+    storeCart({});
+  }
+
   return (
     <Card className="mx-auto w-[350px]">
       <CardHeader>
@@ -57,23 +66,26 @@ export default function Page() {
       <CardFooter>
         <Dialog>
           <DialogTrigger className="w-full">
-            <div className={`${buttonVariants()} w-full`}>
+            <span
+              onClick={handleSubmit}
+              className={`${buttonVariants()} w-full`}
+            >
               Save Shipping Information
-            </div>
+            </span>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Order Placed Successfully</DialogTitle>
-              <DialogDescription>
-                <div>An invoice has been sent to your email address.</div>
-                <div className="flex justify-between mt-4">
+              <DialogDescription className="flex flex-col">
+                <span>An invoice has been sent to your email address.</span>
+                <span className="flex justify-between mt-4">
                   <Link href="/marketplace" className={`${buttonVariants()}`}>
                     Continue Shopping
                   </Link>
                   <Link href="/my-orders" className={`${buttonVariants()}`}>
                     View My Orders
                   </Link>
-                </div>
+                </span>
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
