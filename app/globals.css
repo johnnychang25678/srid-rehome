@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+/* body {
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 @layer utilities {
   .text-balance {
@@ -74,5 +74,15 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Tinos';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(./fonts/Tinos-Regular.woff2) format('woff2');
   }
 }

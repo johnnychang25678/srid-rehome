@@ -32,6 +32,11 @@ export default function HomePage() {
             I want to Sell
           </Button>
         </Link>
+        <Link href="/furnishing-service" passHref>
+          <Button variant="default" className="bg-black text-white hover:bg-gray-700 w-full">
+            Request for Furnishing Service
+          </Button>
+        </Link>
         <Link href="/profile" passHref>
           <Button variant="outline" className="hover:bg-gray-100 w-full">
             View Profile
