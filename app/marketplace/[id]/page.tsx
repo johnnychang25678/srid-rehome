@@ -76,7 +76,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
               <div
                 dangerouslySetInnerHTML={{ __html: item.description }}
-                className="space-y-6 text-base text-gray-700"
+                className="space-y-6 text-base text-gray-700 font-roboto text-sm"
               />
             </div>
 
@@ -117,7 +117,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   {item.qas.map((qa) => (
                     <AccordionItem key={qa.id} value={qa.question}>
                       <AccordionTrigger>{qa.question}</AccordionTrigger>
-                      <AccordionContent>{qa.answer}</AccordionContent>
+                      <AccordionContent className="font-roboto text-xs">{qa.answer}</AccordionContent>
                     </AccordionItem>
                   ))}
                 </Accordion>
