@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function SellItems() {
   const [photos, setPhotos] = useState<File[]>([]);
@@ -58,12 +59,12 @@ export default function SellItems() {
               </li>
             ))}
           </ul>
-          <button
+          <Button
             onClick={handleConfirm}
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+            className="bg-black text-white hover:bg-gray-700"
           >
             Confirm Photos
-          </button>
+          </Button>
         </div>
       )}
     </div>
