@@ -83,18 +83,19 @@ export function getOrders() {
   if (savedOrders) {
     return JSON.parse(savedOrders);
   }
-  return {};
+  return [];
 }
 
 export function storeOrders(orders: Record<number, number>) {
   const savedOrders = getOrders();
   for (const [key, value] of Object.entries(orders)) {
     const id = parseInt(key, 10);
-    if (savedOrders[id]) {
-      savedOrders[id] += value;
-    } else {
-      savedOrders[id] = value;
+    const order = {
+      id: id,
+      count: value,
+      timestamp: Date.now(),
     }
+    savedOrders.push(order);
   }
   localStorage.setItem("orders", JSON.stringify(savedOrders));
 }
