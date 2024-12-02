@@ -1,4 +1,4 @@
-import { Item } from "@/lib/types";
+import {Item, Profile} from "@/lib/types";
 
 export const mockItems: Item[] = [
   {
@@ -71,5 +71,38 @@ export const moreMockItems: Item[] = [
     description: "a bed",
     verified: true,
     qas: [],
+  },
+];
+
+export const mockUsers: Profile[] = [
+  {
+    verified: true,
+    email: "johndoe@example.com",
+    username: "JohnDoe",
+    avatar: "https://randomuser.me/api/portraits/men/1.jpg",
+  },
+  {
+    verified: false,
+    email: "janedoe@example.com",
+    username: "JaneDoe",
+    avatar: "https://randomuser.me/api/portraits/women/2.jpg",
+  },
+  {
+    verified: true,
+    email: "mikejones@example.com",
+    username: "Mike Jones",
+    avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+  },
+  {
+    verified: false,
+    email: "sarahsmith@example.com",
+    username: "SarahSmith",
+    avatar: "https://randomuser.me/api/portraits/women/4.jpg",
+  },
+  {
+    verified: false,
+    email: "alexjohnson@example.com",
+    username: "AlexJohnson",
+    avatar: "https://randomuser.me/api/portraits/men/5.jpg",
   },
 ];

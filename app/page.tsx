@@ -1,9 +1,20 @@
-import React from "react";
+"use client";
+
+import React, {useEffect, useState} from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import {getCurrentUser} from "@/lib/utils";
 
 export default function HomePage() {
+
+  const [usernameLink, setUsernameLink] = useState("");
+
+  useEffect(() => {
+    const profile = getCurrentUser();
+    setUsernameLink(`/profile/${profile?.username as string}`);
+  }, []);
+
   return (
     <div className="flex flex-col items-center min-h-screen mt-2">
       {/* Welcome Message */}
@@ -37,8 +48,8 @@ export default function HomePage() {
             Request for Furnishing Service
           </Button>
         </Link>
-        <Link href="/profile" passHref>
-          <Button variant="outline" className="hover:bg-gray-100 w-full">
+        <Link href={usernameLink} passHref>
+          <Button variant="default" className="hover:bg-gray-100 w-full">
             View Profile
           </Button>
         </Link>
