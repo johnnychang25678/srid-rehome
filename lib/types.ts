@@ -21,9 +21,8 @@ export type Order = {
 };
 
 export type Profile = {
-  id: number;
+  username: string;
   verified: boolean;
   email: string;
-  name: string;
   avatar: string;
 }

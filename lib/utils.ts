@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Item } from "@/lib/types";
-import { mockItems } from "./data";
+import {Item, Profile} from "@/lib/types";
+import {mockItems, mockUsers} from "./data";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,6 +15,39 @@ export function updateItem(item: Item) {
   }
   items[item.id] = item;
   localStorage.setItem("items", JSON.stringify(items));
+}
+
+export function getUserByUsername(username: string): Profile | undefined {
+  const profilesJson = localStorage.getItem("users");
+  if (profilesJson) {
+    const profiles = JSON.parse(profilesJson);
+    for (const p of profiles) {
+      if (p.username === username) {
+        return p;
+      }
+    }
+  }
+  return undefined;
+}
+
+export function getUsers(): Profile[] {
+  const profilesJson = localStorage.getItem("users");
+  if (profilesJson) {
+    return JSON.parse(profilesJson);
+  } else {
+    return mockUsers;
+  }
+}
+
+export function getCurrentUser(): Profile | undefined {
+  const profilesJson = localStorage.getItem("users");
+  if (profilesJson) {
+    const profiles = JSON.parse(profilesJson);
+    return profiles[profiles.length - 1];
+  } else {
+    const profiles = mockUsers;
+    return profiles[profiles.length - 1];
+  }
 }
 
 export function getItemById(id: number): Item | undefined {
