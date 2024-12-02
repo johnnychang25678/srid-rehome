@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function SellItems() {
   const [photos, setPhotos] = useState<File[]>([]);
@@ -20,15 +21,7 @@ export default function SellItems() {
   const handleRemovePhoto = (index: number) => {
     setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
   };
-  //   const handlePreview = (index: number) => {
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       const imageSrc = e.target?.result as string;
-  //       sessionStorage.setItem("previewImage", imageSrc);
-  //       router.push("/sell-items/preview");
-  //     };
-  //     reader.readAsDataURL(photos[index]);
-  //   };
+
   const handleConfirm = () => {
     sessionStorage.setItem("uploadedPhotos", JSON.stringify(photos));
     router.push("/sell-items/item-info-filling");
@@ -37,6 +30,19 @@ export default function SellItems() {
   return (
     <div>
       <h1 className="text-2xl font-bold">Sell Items</h1>
+
+      <div className="mb-8">
+        <Image
+          src="/images/image.png"
+          alt="Welcome Illustration"
+          width={300}
+          height={200}
+          className="rounded-md"
+        />
+      </div>
+      <p className="mt-2 text-gray-600">
+        Upload photos of your item. We will help you create a listing with AI.
+      </p>
       <input
         type="file"
         accept="image/*"
