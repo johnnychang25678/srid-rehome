@@ -19,3 +19,11 @@ export type Order = {
   productName: string;
   image: string; // image path in project, e.g., images/chair.jpeg
 };
+
+export type Profile = {
+  id: number;
+  verified: boolean;
+  email: string;
+  name: string;
+  avatar: string;
+}
