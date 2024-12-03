@@ -1,4 +1,4 @@
-import {Item, Profile} from "@/lib/types";
+import { Item, Profile } from "@/lib/types";
 
 export const mockItems: Item[] = [
   {
