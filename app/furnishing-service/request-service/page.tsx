@@ -4,10 +4,11 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox"; // Use ShadCN Checkbox
-import { Order } from "@/lib/types";
 import Link from "next/link";
+import { getItemById } from "@/lib/utils";
+import { Item } from "@/lib/types";
 
-type SelectableOrder = Order & { selected: boolean };
+type SelectableOrder = Item & { selected: boolean };
 
 export default function RequestService() {
   const [orders, setOrders] = useState<SelectableOrder[]>([]); // keep track of orders selected state
@@ -15,12 +16,16 @@ export default function RequestService() {
 
   // Load orders from localStorage
   useEffect(() => {
+    // TODO: use getItemById
     const storedOrders = localStorage.getItem("orders");
     if (storedOrders) {
       // Parse the stored data and map to add `selected` property
-      const parsedOrders: Order[] = JSON.parse(storedOrders);
-      const selectableOrders: SelectableOrder[] = parsedOrders.map((order) => ({
-        ...order,
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const parsed: any[] = JSON.parse(storedOrders);
+      const parsedItems: Item[] = parsed.map(p => getItemById(p.id)!)
+      const selectableOrders: SelectableOrder[] = parsedItems.map((item) => ({
+        ...item,
         selected: false,
       }));
       setOrders(selectableOrders);
@@ -37,7 +42,7 @@ export default function RequestService() {
   }, [orders]);
 
   // Toggle order selection
-  const handleSelect = (id: string) => {
+  const handleSelect = (id: number) => {
     const updatedOrders = orders.map((order) =>
       order.id === id ? { ...order, selected: !order.selected } : order
     );
@@ -70,12 +75,12 @@ export default function RequestService() {
             >
               <Image
                 src={order.image}
-                alt={order.productName}
+                alt={order.name}
                 width={300}
                 height={200}
                 className="rounded-md mb-4"
               />
-              <h2 className="text-lg font-bold mb-2">{order.productName}</h2>
+              <h2 className="text-lg font-bold mb-2">{order.name}</h2>
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id={`select-${order.id}`}
