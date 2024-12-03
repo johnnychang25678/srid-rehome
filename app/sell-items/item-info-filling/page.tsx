@@ -20,8 +20,8 @@ export default function ItemInfo() {
         </p>
         <div className="mb-8">
           <Image
-            src="/images/chair.jpeg"
-            alt="Welcome Illustration"
+            src="/images/red_chair.png"
+            alt="Red Chair"
             width={300}
             height={200}
             className="rounded-md"
@@ -40,12 +40,12 @@ export default function ItemInfo() {
               id="itemName"
               className="w-full px-3 py-2 border rounded-md"
               onChange={(e) => setItemName(e.target.value)}
-              defaultValue="chair"
+              defaultValue="Red Chair"
             />
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1" htmlFor="price">
-              Price
+              Price (AI Suggested)
             </label>
             <input
               type="text"
@@ -66,17 +66,17 @@ export default function ItemInfo() {
               id="description"
               className="w-full px-3 py-2 border rounded-md"
               onChange={(e) => setDescription(e.target.value)}
-              defaultValue="This is a sturdy wooden chair."
+              defaultValue="The wood chair is sturdy, simple, and painted in red, making it a practical and eye-catching piece of furniture."
             ></textarea>
           </div>
         </form>
         <div className="flex gap-2 mt-6">
-          <button
+          <Button
             onClick={() => router.back()}
             className="px-4 py-2 bg-gray-300 text-black rounded-md"
           >
             Back
-          </button>
+          </Button>
           <Button
             onClick={() => {
               console.log({

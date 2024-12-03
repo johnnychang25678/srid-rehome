@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { mockItems, moreMockItems } from "@/lib/data";
+import { getListings } from "@/lib/utils";
+import { Listing, Item } from "@/lib/types";
 
 export default function MarketPlace() {
   const [items, setItems] = useState(mockItems); // State for items
@@ -39,6 +41,23 @@ export default function MarketPlace() {
       const priceB = b.price;
       return sortOption === "asc" ? priceA - priceB : priceB - priceA;
     });
+
+  useEffect(() => {
+    const listings = getListings();
+    if (listings.length > 0) {
+      const newItems: Item[] = listings.map((listing: Listing) => ({
+        id: 6,
+        name: listing.name,
+        description: listing.description,
+        price: listing.price,
+        image: listing.image,
+        verified: true,
+        qas: [],
+      }));
+      newItems.push(...mockItems);
+      setItems(newItems);
+    }
+  }, []); // Only run the effect once on mount
 
   // functions
   const fetchMoreItems = () => {

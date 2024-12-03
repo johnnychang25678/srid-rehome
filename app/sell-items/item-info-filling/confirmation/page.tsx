@@ -30,7 +30,6 @@ export default function FinalizeListing() {
       timestamp: Date.now(),
     };
     storeOneListing(listing);
-    // router.push("/my-listings"); // Navigate to success page
   };
 
   return (
@@ -42,7 +41,7 @@ export default function FinalizeListing() {
 
       <div className="mb-6">
         <label className="block text-lg font-medium mb-1">Item Name</label>
-        <p className="text-gray-700">Chair</p>
+        <p className="text-gray-700">Red Chair</p>
       </div>
       <div className="mb-6">
         <label className="block text-lg font-medium mb-1">Price</label>
@@ -52,14 +51,17 @@ export default function FinalizeListing() {
         <label className="block text-lg font-medium mb-1">
           Item Description
         </label>
-        <p className="text-gray-700">This is a sturdy chair.</p>
+        <p className="text-gray-700">
+          The wood chair is sturdy, simple, and painted in red, making it a
+          practical and eye-catching piece of furniture.
+        </p>
       </div>
 
       <div className="mb-6">
         <label className="block text-lg font-medium mb-1">Photo</label>
         <Image
-          src="/images/chair.jpeg"
-          alt="Welcome Illustration"
+          src="/images/red_chair.png"
+          alt="Red Chair"
           width={300}
           height={200}
           className="rounded-md"
