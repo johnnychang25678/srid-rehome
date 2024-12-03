@@ -28,7 +28,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   function addCartItem() {
     const cart = getCart();
-    cart[itemId] = (cart[itemId] || 0) + 1;
+    cart[itemId] = (cart[itemId] || 0) + 1; // {id: count}
     storeCart(cart);
     router.push("/marketplace/cart");
   }
@@ -99,9 +99,8 @@ export default function Page({ params }: { params: { id: string } }) {
                 >
                   <HeartIcon
                     aria-hidden="true"
-                    className={`size-6 shrink-0 ${
-                      isFavorite ? "text-yellow-500" : ""
-                    }`}
+                    className={`size-6 shrink-0 ${isFavorite ? "text-yellow-500" : ""
+                      }`}
                   />
                 </Button>
               </div>

@@ -5,10 +5,9 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox"; // Use ShadCN Checkbox
 import Link from "next/link";
-import { getItemById } from "@/lib/utils";
-import { Item } from "@/lib/types";
+import { Order } from "@/lib/types";
 
-type SelectableOrder = Item & { selected: boolean };
+export type SelectableOrder = Order & { selected: boolean };
 
 export default function RequestService() {
   const [orders, setOrders] = useState<SelectableOrder[]>([]); // keep track of orders selected state
@@ -19,15 +18,10 @@ export default function RequestService() {
     // TODO: use getItemById
     const storedOrders = localStorage.getItem("orders");
     if (storedOrders) {
-      // Parse the stored data and map to add `selected` property
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const parsed: any[] = JSON.parse(storedOrders);
-      const parsedItems: Item[] = parsed.map(p => getItemById(p.id)!)
-      const selectableOrders: SelectableOrder[] = parsedItems.map((item) => ({
-        ...item,
-        selected: false,
-      }));
+      const parsed: Order[] = JSON.parse(storedOrders);
+      const selectableOrders: SelectableOrder[] = parsed.filter(p => !p.furnishRequested)
+        .map(p => ({ ...p, selected: false }));
       setOrders(selectableOrders);
     }
   }, []);
@@ -81,6 +75,7 @@ export default function RequestService() {
                 className="rounded-md mb-4"
               />
               <h2 className="text-lg font-bold mb-2">{order.name}</h2>
+              <h2 className="text-lg font-bold mb-2">quantity: {order.count}</h2>
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id={`select-${order.id}`}

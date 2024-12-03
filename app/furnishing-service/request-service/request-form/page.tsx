@@ -11,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { Order } from "@/lib/types";
+import { SelectableOrder } from "../page";
 
 // Define form schema with Zod
 const formSchema = z.object({
@@ -42,7 +44,7 @@ const formatPhoneNumber = (value: string) => {
 type FormValues = z.infer<typeof formSchema>;
 
 export default function RequestForm() {
-    const [selectedOrders, setSelectedOrders] = useState([]); // For displaying selected orders
+    const [selectedOrders, setSelectedOrders] = useState<SelectableOrder[]>([]); // For displaying selected orders
     const [isSubmitted, setIsSubmitted] = useState(false); // For showing confirmation box
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
@@ -86,8 +88,20 @@ export default function RequestForm() {
         // Add the new request
         const updatedRequests = [...existingRequests, requestWithOrders];
         localStorage.setItem("furnishingRequests", JSON.stringify(updatedRequests));
+        // here should update orders to furnished
+        const ordersString = localStorage.getItem("orders");
+        if (ordersString) {
+            const orders: Order[] = JSON.parse(ordersString);
+            orders.forEach(order => {
+                for (const s of selectedOrders) {
+                    if (s.id == order.id) {
+                        order.furnishRequested = true;
+                    }
+                }
+            })
+            localStorage.setItem("orders", JSON.stringify(orders));
+        }
         localStorage.removeItem("selectedOrders");
-
         // Show confirmation box
         setIsSubmitted(true);
     };

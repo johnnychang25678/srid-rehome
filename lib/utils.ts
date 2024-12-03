@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Item, Profile, Listing } from "@/lib/types";
+import { Item, Profile, Listing, Order } from "@/lib/types";
 import { mockItems, mockUsers, moreMockItems } from "./data";
 
 export function cn(...inputs: ClassValue[]) {
@@ -14,6 +14,12 @@ export function updateItem(item: Item) {
     items = JSON.parse(itemsJson);
   }
   items[item.id] = item;
+  localStorage.setItem("items", JSON.stringify(items));
+}
+
+// update all items in localstorage
+export function updateItems(items: Item[]) {
+  localStorage.removeItem("items")
   localStorage.setItem("items", JSON.stringify(items));
 }
 
@@ -78,7 +84,7 @@ export function storeCart(cart: Record<number, number>) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-export function getOrders() {
+export function getOrders(): Order[] {
   const savedOrders = localStorage.getItem("orders");
   if (savedOrders) {
     return JSON.parse(savedOrders);
@@ -86,19 +92,25 @@ export function getOrders() {
   return [];
 }
 
-export function storeOrders(orders: Record<number, number>) {
-  const savedOrders = getOrders();
-  for (const [key, value] of Object.entries(orders)) {
-    const id = parseInt(key, 10);
-    const order = {
-      id: id,
-      count: value,
-      timestamp: Date.now(),
-    };
-    savedOrders.push(order);
-  }
+export function storeOrders(orders: Order[]) {
+  let savedOrders = getOrders();
+  savedOrders = [...savedOrders, ...orders]
   localStorage.setItem("orders", JSON.stringify(savedOrders));
 }
+
+// export function storeOrders(orders: Record<number, number>) {
+//   const savedOrders = getOrders();
+//   for (const [key, value] of Object.entries(orders)) {
+//     const id = parseInt(key, 10);
+//     const order = {
+//       id: id,
+//       count: value,
+//       timestamp: Date.now(),
+//     };
+//     savedOrders.push(order);
+//   }
+//   localStorage.setItem("orders", JSON.stringify(savedOrders));
+// }
 
 export function getListings() {
   const savedListings = localStorage.getItem("listings");

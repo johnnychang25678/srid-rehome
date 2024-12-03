@@ -21,12 +21,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
-import { getCart, storeCart, storeOrders } from "@/lib/utils";
+import { getCart, getItemById, storeCart, storeOrders } from "@/lib/utils";
+import { Order } from "@/lib/types";
 
 export default function Page() {
   function handleSubmit() {
     const savedCart = getCart();
-    storeOrders(savedCart);
+    // convert cart to orders
+    console.log("savedCart: ", savedCart)
+    const orders: Order[] = []
+    for (const [itemId, count] of Object.entries(savedCart)) {
+      const item = getItemById(Number(itemId))
+      if (item) {
+        const order: Order = { ...item, furnishRequested: false, count: count, timestamp: Date.now() }
+        orders.push(order)
+      }
+    }
+    storeOrders(orders);
     storeCart({});
   }
 

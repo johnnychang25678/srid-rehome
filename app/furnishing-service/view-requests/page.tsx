@@ -15,6 +15,7 @@ type Request = {
     selectedOrders: {
         id: string;
         name: string;
+        count: number;
     }[];
     status: string;
 };
@@ -30,6 +31,14 @@ export default function MyRequestsPage() {
             setRequests(JSON.parse(storedRequests));
         }
     }, []);
+
+    function getItemsInfo(request: Request) {
+        const out = []
+        for (const o of request.selectedOrders) {
+            out.push(`item: ${o.name} - quantity: ${o.count}`)
+        }
+        return out.join(", ")
+    }
 
     return (
         <div className="flex flex-col items-center min-h-screen">
@@ -49,7 +58,7 @@ export default function MyRequestsPage() {
                             <CardContent className="text-sm space-y-2">
                                 <p>
                                     <strong>Items:</strong>{" "}
-                                    {request.selectedOrders.map((order) => order.name).join(", ")}
+                                    {getItemsInfo(request)}
                                 </p>
                                 <p>
                                     <strong>Address:</strong> {request.address}

@@ -10,16 +10,15 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import { getOrders, getItemById } from "@/lib/utils";
+import { getOrders } from "@/lib/utils";
+import { Order } from "@/lib/types";
 
 export default function MyOrders() {
-  const [order, setOrder] = useState<
-    { id: number; count: number; timestamp: number }[]
-  >([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
     const savedOrder = getOrders();
-    setOrder(savedOrder);
+    setOrders(savedOrder);
   }, []);
 
   function formatTimestamp(timestamp: number): string {
@@ -41,30 +40,30 @@ export default function MyOrders() {
 
         <form>
           <section>
-            {order.map((order) => {
-              const item = getItemById(order.id);
-              if (!item) return null;
+            {orders.map((order) => {
+              // const item = getItemById(order.id);
+              // if (!item) return null;
               return (
-                <Link href={`/marketplace/${item.id}`} key={item.id}>
+                <Link href={`/marketplace/${order.id}`} key={order.id}>
                   <Card className="mt-4">
                     <CardHeader>
                       <Image
-                        src={item.image}
-                        alt={item.name}
+                        src={order.image}
+                        alt={order.name}
                         width={300}
                         height={160}
                         className="w-full h-40 object-cover rounded-md"
                       />
                     </CardHeader>
                     <CardContent>
-                      <CardTitle className="mb-2">{item.name}</CardTitle>
+                      <CardTitle className="mb-2">{order.name}</CardTitle>
                       <CardDescription className="flex flex-col justify-between">
-                        <span>Price: ${item.price}</span>
+                        <span>Price: ${order.price}</span>
                         <span>Quantity: {order.count}</span>
                         <span>
                           Order Date: {formatTimestamp(order.timestamp)}
                         </span>
-                        <span>Status: Preparing for shipping</span>
+                        <span>Status: {order.furnishRequested ? "Requested for Furnishing Service" : "Preparing for shipping"} </span>
                       </CardDescription>
                     </CardContent>
                   </Card>
