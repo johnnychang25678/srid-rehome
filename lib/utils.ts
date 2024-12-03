@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import {Item, Profile} from "@/lib/types";
-import {mockItems, mockUsers} from "./data";
+import { Item, Profile, Listing } from "@/lib/types";
+import { mockItems, mockUsers } from "./data";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -94,8 +94,22 @@ export function storeOrders(orders: Record<number, number>) {
       id: id,
       count: value,
       timestamp: Date.now(),
-    }
+    };
     savedOrders.push(order);
   }
   localStorage.setItem("orders", JSON.stringify(savedOrders));
+}
+
+export function getListings() {
+  const savedListings = localStorage.getItem("listings");
+  if (savedListings) {
+    return JSON.parse(savedListings);
+  }
+  return [];
+}
+
+export function storeOneListing(listing: Listing) {
+  const savedListings = getListings();
+  savedListings.push(listing);
+  localStorage.setItem("listings", JSON.stringify(savedListings));
 }

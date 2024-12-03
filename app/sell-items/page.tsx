@@ -29,9 +29,9 @@ export default function SellItems() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Sell Items</h1>
+      <h1 className="text-2xl font-bold text-center">Sell Items</h1>
 
-      <div className="mb-8">
+      <div className="mb-8 flex justify-center">
         <Image
           src="/images/image.png"
           alt="Welcome Illustration"
@@ -40,21 +40,27 @@ export default function SellItems() {
           className="rounded-md"
         />
       </div>
-      <p className="mt-2 text-gray-600">
+      <p className="mt-2 text-gray-600 text-center">
         Upload photos of your item. We will help you create a listing with AI.
       </p>
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={handlePhotoUpload}
-      />
+      <div className="flex justify-center">
+        <label className="bg-black text-white hover:bg-gray-700 mt-4 px-4 py-2 rounded-md cursor-pointer">
+          Upload Photos
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handlePhotoUpload}
+            className="hidden"
+          />
+        </label>
+      </div>
       {photos.length > 0 && (
         <div>
-          <p className="mt-2 text-gray-600">Photos uploaded:</p>
-          <ul>
+          <p className="mt-2 text-gray-600 text-center">Photos uploaded:</p>
+          <ul className="flex flex-col items-center">
             {photos.map((photo, index) => (
-              <li key={index}>
+              <li key={index} className="flex items-center mb-2">
                 {photo.name}
                 <button
                   onClick={() => handleRemovePhoto(index)}
@@ -65,12 +71,14 @@ export default function SellItems() {
               </li>
             ))}
           </ul>
-          <Button
-            onClick={handleConfirm}
-            className="bg-black text-white hover:bg-gray-700"
-          >
-            Confirm Photos
-          </Button>
+          <div className="flex justify-center mt-4">
+            <Button
+              onClick={handleConfirm}
+              className="bg-black text-white hover:bg-gray-700"
+            >
+              Confirm Photos
+            </Button>
+          </div>
         </div>
       )}
     </div>

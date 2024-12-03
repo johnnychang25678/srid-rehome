@@ -20,9 +20,18 @@ export type Order = {
   image: string; // image path in project, e.g., images/chair.jpeg
 };
 
+export type Listing = {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+  timestamp: number;
+};
+
 export type Profile = {
   username: string;
   verified: boolean;
   email: string;
   avatar: string;
-}
+};

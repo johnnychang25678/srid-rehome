@@ -2,13 +2,35 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
+import { getListings, storeOneListing } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { CardFooter } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function FinalizeListing() {
   const router = useRouter();
 
   const handleSubmit = () => {
-    router.push("/my-listings"); // Navigate to success page
+    const listings = getListings();
+    const listing = {
+      id: listings.length + 1,
+      name: "Red Chair",
+      price: 10,
+      description: "This is a sturdy chair.",
+      image: "/images/red_chair.png",
+      timestamp: Date.now(),
+    };
+    storeOneListing(listing);
+    // router.push("/my-listings"); // Navigate to success page
   };
 
   return (
@@ -45,18 +67,46 @@ export default function FinalizeListing() {
       </div>
 
       <div className="flex gap-2 mt-6">
-        <button
+        <Button
           onClick={() => router.back()}
           className="px-4 py-2 bg-gray-300 text-black rounded-md"
         >
           Back
-        </button>
-        <Button
+        </Button>
+        {/* <Button
           onClick={handleSubmit}
           className="bg-black text-white hover:bg-gray-700"
         >
           Confirm and Publish
-        </Button>
+        </Button> */}
+        <CardFooter>
+          <Dialog>
+            <DialogTrigger className="w-full">
+              <span
+                onClick={handleSubmit}
+                className={`${buttonVariants()} w-full`}
+              >
+                Confirm and Publish
+              </span>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Published Successfully</DialogTitle>
+                <DialogDescription className="flex flex-col">
+                  <span>You have successfully created a listing.</span>
+                  <span className="flex justify-between mt-4">
+                    <Link href="/my-listings" className={`${buttonVariants()}`}>
+                      Go to My Listings
+                    </Link>
+                    <Link href="/marketplace" className={`${buttonVariants()}`}>
+                      Go to Marketplace
+                    </Link>
+                  </span>
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        </CardFooter>
       </div>
     </div>
   );

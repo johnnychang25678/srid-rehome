@@ -1,4 +1,4 @@
-import {Item, Profile} from "@/lib/types";
+import { Item, Profile } from "@/lib/types";
 
 export const mockItems: Item[] = [
   {
@@ -69,6 +69,15 @@ export const moreMockItems: Item[] = [
     price: 90,
     image: "/images/bed.jpeg",
     description: "a bed",
+    verified: true,
+    qas: [],
+  },
+  {
+    id: 6,
+    name: "Red Chair",
+    price: 10,
+    image: "/images/red_chair.png",
+    description: "a red chair",
     verified: true,
     qas: [],
   },
