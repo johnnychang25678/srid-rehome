@@ -212,7 +212,7 @@ export default function RequestForm() {
                             <AlertCircle className="h-6 w-6 text-black mr-2" />
                             <h2 className="text-lg font-bold">Service is Requested!</h2>
                         </div>
-                        <p className="text-gray-600 mb-4">We will contact you shortly.</p>
+                        <p className="text-gray-600 mb-4 font-roboto text-sm">We will contact you shortly.</p>
                         <Link href="/furnishing-service/view-requests">
                             <Button className="bg-black text-white hover:bg-gray-700">
                                 View My Requests

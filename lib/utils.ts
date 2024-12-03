@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Item, Profile, Listing } from "@/lib/types";
-import { mockItems, mockUsers } from "./data";
+import { mockItems, mockUsers, moreMockItems } from "./data";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -58,7 +58,7 @@ export function getItemById(id: number): Item | undefined {
     item = items[id];
   }
   if (!item) {
-    item = mockItems.find((item) => item.id === id);
+    item = [...mockItems, ...moreMockItems].find((item) => item.id === id);
     if (item) {
       updateItem(item);
     }

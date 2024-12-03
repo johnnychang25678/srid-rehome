@@ -59,6 +59,7 @@ const config: Config = {
   		},
 		  fontFamily: {
 			sans: ['Tinos', ...defaultTheme.fontFamily.sans],
+			roboto: ['Roboto', 'sans-serif'],
 		  },
   		keyframes: {
   			'accordion-down': {

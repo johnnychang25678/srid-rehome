@@ -1,10 +1,10 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import {getCurrentUser} from "@/lib/utils";
+import { getCurrentUser } from "@/lib/utils";
 
 export default function HomePage() {
 
@@ -54,13 +54,13 @@ export default function HomePage() {
           </Button>
         </Link>
         <Link href="/my-orders" passHref>
-          <Button variant="outline" className="hover:bg-gray-100 w-full">
-            Check My Orders
+          <Button variant="default" className="hover:bg-gray-100 w-full">
+            View My Orders
           </Button>
         </Link>
         <Link href="/my-listings" passHref>
-          <Button variant="outline" className="hover:bg-gray-100 w-full">
-            Check My Listings
+          <Button variant="default" className="hover:bg-gray-100 w-full">
+            View My Listings
           </Button>
         </Link>
       </div>

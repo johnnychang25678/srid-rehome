@@ -137,7 +137,7 @@ export default function MarketPlace() {
                   <CardDescription className="text-gray-500">
                     ${item.price}
                   </CardDescription>
-                  <CardDescription className="text-gray-500">
+                  <CardDescription className="text-gray-500 font-roboto">
                     {item.description}
                   </CardDescription>
                 </CardContent>

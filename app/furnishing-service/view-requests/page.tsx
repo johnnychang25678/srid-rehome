@@ -14,7 +14,7 @@ type Request = {
     instructions: string;
     selectedOrders: {
         id: string;
-        productName: string;
+        name: string;
     }[];
     status: string;
 };
@@ -26,15 +26,10 @@ export default function MyRequestsPage() {
     useEffect(() => {
         const storedRequests = localStorage.getItem("furnishingRequests");
         if (storedRequests) {
-            console.log("parsed", JSON.parse(storedRequests))
+            // console.log("parsed", JSON.parse(storedRequests))
             setRequests(JSON.parse(storedRequests));
         }
     }, []);
-
-    // Log requests when they change
-    useEffect(() => {
-        console.log("Updated Requests State:", requests);
-    }, [requests]);
 
     return (
         <div className="flex flex-col items-center min-h-screen">
@@ -54,7 +49,7 @@ export default function MyRequestsPage() {
                             <CardContent className="text-sm space-y-2">
                                 <p>
                                     <strong>Items:</strong>{" "}
-                                    {request.selectedOrders.map((order) => order.productName).join(", ")}
+                                    {request.selectedOrders.map((order) => order.name).join(", ")}
                                 </p>
                                 <p>
                                     <strong>Address:</strong> {request.address}

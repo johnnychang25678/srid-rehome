@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, LineChart, User, Package, Star } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
@@ -16,7 +17,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <header className="sticky top-0 z-50 bg-white shadow p-4">
                 <div className="flex justify-between items-center max-w-6xl mx-auto">
                     <Link href="/" className="text-black text-lg font-bold hover:underline focus:outline-none">
-                        ReHome
+                        <Image
+                            src="/images/logo-black.png"
+                            alt="ReHome Logo"
+                            width={60} 
+                            height={60}
+                        />
                     </Link>
 
                     {/* Hamburger Menu */}
@@ -47,7 +53,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                         <ShoppingCart className="h-5 w-5 text-gray-700" />
                                         <div>
                                             <p className="text-sm font-medium text-gray-900">Marketplace</p>
-                                            <p className="text-sm text-gray-600">Buy furnitures</p>
+                                            <p className="text-xs text-gray-600 font-roboto">Buy furnitures</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -58,7 +64,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                         <LineChart className="h-5 w-5 text-gray-700" />
                                         <div>
                                             <p className="text-sm font-medium text-gray-900">Sell used items</p>
-                                            <p className="text-sm text-gray-600">
+                                            <p className="text-xs text-gray-600 font-roboto">
                                                 List your second hand items here
                                             </p>
                                         </div>
@@ -72,7 +78,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                         <User className="h-5 w-5 text-gray-700" />
                                         <div>
                                             <p className="text-sm font-medium text-gray-900">My Profile</p>
-                                            <p className="text-sm text-gray-600">
+                                            <p className="text-xs text-gray-600 font-roboto">
                                                 Manage your profile & verify your student identity
                                             </p>
                                         </div>
@@ -85,7 +91,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                         <Package className="h-5 w-5 text-gray-700" />
                                         <div>
                                             <p className="text-sm font-medium text-gray-900">My Order</p>
-                                            <p className="text-sm text-gray-600">Check your orders</p>
+                                            <p className="text-xs text-gray-600 font-roboto">Check your orders</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -96,7 +102,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                         <Star className="h-5 w-5 text-gray-700" />
                                         <div>
                                             <p className="text-sm font-medium text-gray-900">My Listing</p>
-                                            <p className="text-sm text-gray-600">Check your listing</p>
+                                            <p className="text-xs text-gray-600 font-roboto">Check your listing</p>
                                         </div>
                                     </div>
                                 </Link>
