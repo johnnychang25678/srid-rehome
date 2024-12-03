@@ -72,15 +72,6 @@ export const moreMockItems: Item[] = [
     verified: true,
     qas: [],
   },
-  {
-    id: 6,
-    name: "Red Chair",
-    price: 10,
-    image: "/images/red_chair.png",
-    description: "a red chair",
-    verified: true,
-    qas: [],
-  },
 ];
 
 export const mockUsers: Profile[] = [
