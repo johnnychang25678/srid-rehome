@@ -23,7 +23,7 @@ You should be able to see the APP running on `localhost:3000`
 
 Production version:
 
-The app is deployed on Vercel: [https://rehome.vercel.app](https://srid-rehome-deployment.vercel.app)
+The app is deployed on Vercel: [https://rehome.vercel.app](https://rehome.vercel.app)
 ## Limitations:
 
 1. **Backend Mocking**: Uses localStorage to simulate a backend.
