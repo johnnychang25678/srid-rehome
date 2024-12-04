@@ -89,9 +89,8 @@ export default function Page({ params }: { params: { id: string } }) {
                 >
                   <HeartIcon
                     aria-hidden="true"
-                    className={`size-6 shrink-0 ${
-                      isFavorite ? "text-yellow-500" : ""
-                    }`}
+                    className={`size-6 shrink-0 ${isFavorite ? "text-yellow-500" : ""
+                      }`}
                   />
                 </Button>
               </div>

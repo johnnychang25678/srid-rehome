@@ -61,7 +61,12 @@ export function getItemById(id: number): Item | undefined {
   const itemsJson = localStorage.getItem("items");
   if (itemsJson) {
     const items = JSON.parse(itemsJson);
-    item = items[id];
+    for (const i of items) {
+      if (i.id == id) {
+        item = i;
+        break;
+      }
+    }
   }
   if (!item) {
     item = [...mockItems, ...moreMockItems].find((item) => item.id === id);

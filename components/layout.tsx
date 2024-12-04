@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -6,10 +6,10 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, LineChart, User, Package, Star } from "lucide-react";
+import { ShoppingCart, LineChart, User, Package, Star, Store } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import {getCurrentUser} from "@/lib/utils";
+import { getCurrentUser } from "@/lib/utils";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [usernameLink, setUsernameLink] = useState("");
@@ -62,7 +62,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <DropdownMenuItem asChild>
                 <Link href="/marketplace">
                   <div className="flex items-center space-x-3">
-                    <ShoppingCart className="h-5 w-5 text-gray-700" />
+                    <Store className="h-5 w-5 text-gray-700" />
                     <div>
                       <p className="text-sm font-medium text-gray-900">
                         Marketplace
@@ -108,7 +108,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <DropdownMenuItem asChild>
                 <Link href="/marketplace/cart">
                   <div className="flex items-center space-x-3">
-                    <User className="h-5 w-5 text-gray-700" />
+                    <ShoppingCart className="h-5 w-5 text-gray-700" />
                     <div>
                       <p className="text-sm font-medium text-gray-900">
                         My Cart

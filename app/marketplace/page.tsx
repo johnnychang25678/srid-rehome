@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { mockItems, moreMockItems } from "@/lib/data";
-import { getListings } from "@/lib/utils";
+import { getListings, updateItems } from "@/lib/utils";
 import { Listing, Item } from "@/lib/types";
 
 export default function MarketPlace() {
@@ -45,8 +45,8 @@ export default function MarketPlace() {
   useEffect(() => {
     const listings = getListings();
     if (listings.length > 0) {
-      const newItems: Item[] = listings.map((listing: Listing) => ({
-        id: 6,
+      const newItems: Item[] = listings.map((listing: Listing, idx: number) => ({
+        id: 6 + idx,
         name: listing.name,
         description: listing.description,
         price: listing.price,
@@ -54,8 +54,9 @@ export default function MarketPlace() {
         verified: true,
         qas: [],
       }));
-      newItems.push(...mockItems);
-      setItems(newItems);
+      const updatedItems = [...mockItems, ...newItems]
+      updateItems(updatedItems);
+      setItems(updatedItems);
     }
   }, []); // Only run the effect once on mount
 
@@ -78,7 +79,7 @@ export default function MarketPlace() {
     const handleScroll = () => {
       if (
         window.innerHeight + window.scrollY >=
-          document.body.offsetHeight - 500 &&
+        document.body.offsetHeight - 500 &&
         !loading
       ) {
         if (items.length < 5) {
