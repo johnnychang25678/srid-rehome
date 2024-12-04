@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -9,16 +9,8 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, LineChart, User, Package, Star, Store } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { getCurrentUser } from "@/lib/utils";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [usernameLink, setUsernameLink] = useState("");
-
-  useEffect(() => {
-    const profile = getCurrentUser();
-    setUsernameLink(`/profile/${profile?.username as string}`);
-  }, []);
-
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -91,7 +83,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </DropdownMenuItem>
               <hr className="my-2" />
               <DropdownMenuItem asChild>
-                <Link href={usernameLink}>
+                <Link href="/profile">
                   <div className="flex items-center space-x-3">
                     <User className="h-5 w-5 text-gray-700" />
                     <div>

@@ -97,7 +97,7 @@ export default function VerifyEmailPage() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-50">
             <div className="bg-white shadow-md p-6 rounded-md text-center max-w-md">
-                <h1 className="mb-4 text-2xl font-bold">Verify Your Email</h1>
+                <h1 className="mb-4 text-2xl font-bold">Verify Your Email. Hint: 123456</h1>
                 <p className="mb-4">
                     Enter the verification code sent to your .edu email address.
                 </p>
