@@ -116,7 +116,9 @@ export default function Page({ params }: { params: { id: string } }) {
                   {item.qas.map((qa) => (
                     <AccordionItem key={qa.id} value={qa.question}>
                       <AccordionTrigger>{qa.question}</AccordionTrigger>
-                      <AccordionContent className="font-roboto text-xs">{qa.answer}</AccordionContent>
+                      <AccordionContent className="font-roboto text-xs">
+                        {qa.answer}
+                      </AccordionContent>
                     </AccordionItem>
                   ))}
                 </Accordion>
