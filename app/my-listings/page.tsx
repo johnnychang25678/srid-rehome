@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getItemById } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { Listing } from "@/lib/types";
@@ -39,7 +38,7 @@ export default function MyListings() {
       <div className="max-w-2xl px-4">
         <div className="flex justify-start items-center gap-x-2">
           <h1 className="text-left text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Orders
+            Listings
           </h1>
         </div>
 
@@ -51,7 +50,7 @@ export default function MyListings() {
               console.log(item);
               if (!item) return null;
               return (
-                <Link href={`/sell-items/item-info-filling`}>
+                <Link href={`/sell-items/item-info-filling`} key={item.id}>
                   <Card className="mt-4">
                     <CardHeader>
                       <Image
