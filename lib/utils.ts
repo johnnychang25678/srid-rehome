@@ -19,11 +19,11 @@ export function updateItem(item: Item) {
 
 // update all items in localstorage
 export function updateItems(items: Item[]) {
-  localStorage.removeItem("items")
+  localStorage.removeItem("items");
   localStorage.setItem("items", JSON.stringify(items));
 }
 
-export function getUserByUsername(username: string): Profile | undefined{
+export function getUserByUsername(username: string): Profile | undefined {
   const profilesJson = localStorage.getItem("users");
   if (profilesJson) {
     const profiles = JSON.parse(profilesJson);
@@ -36,7 +36,7 @@ export function getUserByUsername(username: string): Profile | undefined{
   return undefined;
 }
 
-export function getUsers(): Profile[]{
+export function getUsers(): Profile[] {
   const profilesJson = localStorage.getItem("users");
   if (profilesJson) {
     return JSON.parse(profilesJson);
@@ -61,7 +61,7 @@ export function getItemById(id: number): Item | undefined {
   const itemsJson = localStorage.getItem("items");
   if (itemsJson) {
     const items = JSON.parse(itemsJson);
-    for (const i of items) {
+    for (const i of Object.values(items) as Item[]) {
       if (i.id == id) {
         item = i;
         break;
@@ -99,7 +99,7 @@ export function getOrders(): Order[] {
 
 export function storeOrders(orders: Order[]) {
   let savedOrders = getOrders();
-  savedOrders = [...savedOrders, ...orders]
+  savedOrders = [...savedOrders, ...orders];
   localStorage.setItem("orders", JSON.stringify(savedOrders));
 }
 

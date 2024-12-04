@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { mockItems, moreMockItems } from "@/lib/data";
-import { getListings, updateItems } from "@/lib/utils";
+import { getListings, updateItem } from "@/lib/utils";
 import { Listing, Item } from "@/lib/types";
 
 export default function MarketPlace() {
@@ -55,7 +55,9 @@ export default function MarketPlace() {
         qas: [],
       }));
       const updatedItems = [...mockItems, ...newItems]
-      updateItems(updatedItems);
+      for (const item of updatedItems) {
+        updateItem(item);
+      }
       setItems(updatedItems);
     }
   }, []); // Only run the effect once on mount
