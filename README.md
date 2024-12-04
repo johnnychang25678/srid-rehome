@@ -31,3 +31,4 @@ The app is deployed on Vercel: [https://rehome.vercel.app](https://srid-rehome-d
 3. **Item Modification**: Editing item descriptions is currently unsupported.
 4. **Listing Navigation Issue**: Clicking a listing redirects to the information page. Publishing again creates a new listing instead of modifying the existing one.
 5. **Seller Name Customization**: Unable to customize seller names due to the absence of signup/login functionality.
+6. **Verify profile verification code**: Verification code is always 123456.
