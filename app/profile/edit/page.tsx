@@ -4,8 +4,15 @@ import { useState, useEffect } from "react";
 import { getCurrentUser, getUsers } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
+type Profile = {
+    username: string;
+    email: string;
+    avatar: string;
+    verified: boolean;
+};
+
 export default function EditProfilePage() {
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile]= useState<Profile | null>(null); // Allow null for initial state
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [avatar, setAvatar] = useState("");
@@ -20,7 +27,7 @@ export default function EditProfilePage() {
         setAvatar(currentUser.avatar);
     }, []);
 
-    const handleUsernameChange = (e) => {
+    const handleUsernameChange = (e: { target: { value: any; }; }) => {
         const input = e.target.value;
         // Prevent spaces in the username
         if (/\s/.test(input)) {
@@ -31,7 +38,7 @@ export default function EditProfilePage() {
         setUsername(input); // Automatically remove spaces
     };
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = (e: { target: { value: any; }; }) => {
         const input = e.target.value;
 
         // Ensure email ends with .edu
@@ -43,7 +50,7 @@ export default function EditProfilePage() {
         setEmail(input);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
         // Validate email one more time before submission
@@ -59,13 +66,13 @@ export default function EditProfilePage() {
         }
 
         const storedUsers = getUsers();
-        let updatedCurrentUser = getCurrentUser();
+        const updatedCurrentUser = getCurrentUser();
         updatedCurrentUser.username = username;
         updatedCurrentUser.avatar = avatar;
         updatedCurrentUser.email = email;
 
         const updatedUsers = storedUsers.map((user) => {
-            if (user.username === profile.username) {
+            if (profile && user.username === profile.username) {
                 if (user.email !== email) {
                     updatedCurrentUser.verified = false;
                 }

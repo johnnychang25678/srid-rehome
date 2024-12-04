@@ -5,9 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 
+type Profile = {
+    username: string;
+    email: string;
+    avatar: string;
+    verified: boolean;
+};
+
 export default function Page({ params }: { params: { username: string } }) {
 
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState<Profile | null>(null); // Allow null for initial state
     const [isCurrentUser, setIsCurrentUser] = useState(false);
 
     const username = params.username;
@@ -16,8 +23,10 @@ export default function Page({ params }: { params: { username: string } }) {
         const user = getUserByUsername(username as string)
         const currentUser = getCurrentUser();
 
-        setProfile(user);
-        setIsCurrentUser(currentUser && currentUser.username === user.username);
+        if (user){
+            setProfile(user);
+            setIsCurrentUser(currentUser && currentUser.username === user.username);
+        }
 
     }, []);
 

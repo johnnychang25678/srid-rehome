@@ -1,7 +1,7 @@
 "use client";
 
 import "./globals.css"; // Import Tailwind or global styles
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout";
 import { useEffect } from "react";
 import { mockUsers } from "@/lib/data";
 

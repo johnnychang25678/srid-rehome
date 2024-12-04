@@ -4,8 +4,16 @@ import { useState, useEffect } from "react";
 import { getCurrentUser, getUsers } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
+type Profile = {
+    username: string;
+    email: string;
+    avatar: string;
+    verified: boolean;
+};
+
+
 export default function VerifyEmailPage() {
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState<Profile | null>(null); // Allow null for initial state
     const [verificationCode, setVerificationCode] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
@@ -32,6 +40,10 @@ export default function VerifyEmailPage() {
         setProfile(currentUser);
     }, [router]);
 
+    if (!profile) {
+        return <div>Loading...</div>;
+    }
+
     const handleVerify = () => {
         // Mock verification code for demonstration
         const correctCode = "123456";
@@ -57,7 +69,7 @@ export default function VerifyEmailPage() {
         );
 
         // Redirect to the profile page
-        router.push(`/profile/${profile.username}`);
+        router.back();
     };
 
     const handleExit = () => {
@@ -81,9 +93,6 @@ export default function VerifyEmailPage() {
         );
     }
 
-    if (!profile) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-50">
