@@ -9,7 +9,7 @@ Secondhand furniture marketplace APP for international students
 
 ## Link to our style guide
 
-[https://company-269046.frontify.com/document/528064](https://company-269046.frontify.com/document/528064)
+[https://company-269046.frontify.com/document/528064/](https://company-269046.frontify.com/document/528064/)
 
 ## Operation instructions 
 Run locally:
