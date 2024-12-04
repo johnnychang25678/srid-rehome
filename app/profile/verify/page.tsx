@@ -1,5 +1,3 @@
-// pages/profile/verify.js
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -8,6 +6,8 @@ import { useRouter } from "next/navigation";
 
 export default function VerifyEmailPage() {
     const [profile, setProfile] = useState(null);
+    const [verificationCode, setVerificationCode] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
 
     useEffect(() => {
@@ -17,15 +17,30 @@ export default function VerifyEmailPage() {
             router.push("/");
             return;
         }
+
+        if (!currentUser.email.endsWith(".edu")) {
+            setErrorMessage("Only .edu email addresses are allowed.");
+            return;
+        }
+
         if (currentUser.verified) {
             // Redirect to profile page if already verified
             router.push(`/profile/${currentUser.username}`);
             return;
         }
+
         setProfile(currentUser);
     }, [router]);
 
     const handleVerify = () => {
+        // Mock verification code for demonstration
+        const correctCode = "123456";
+
+        if (verificationCode !== correctCode) {
+            setErrorMessage("Invalid verification code. Please try again.");
+            return;
+        }
+
         // Simulate email verification by updating the 'verified' status
         const storedUsers = getUsers();
         const updatedUsers = storedUsers.map((user) =>
@@ -45,6 +60,27 @@ export default function VerifyEmailPage() {
         router.push(`/profile/${profile.username}`);
     };
 
+    const handleExit = () => {
+        router.back()
+    };
+
+    if (errorMessage) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-gray-50">
+                <div className="bg-white shadow-md p-6 rounded-md text-center max-w-md">
+                    <h1 className="mb-4 text-2xl font-bold">Error</h1>
+                    <p className="mb-6 text-red-500">{errorMessage}</p>
+                    <button
+                        onClick={handleExit}
+                        className="bg-gray-300 text-black hover:bg-gray-400 w-full py-2 rounded-md"
+                    >
+                        Exit
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     if (!profile) {
         return <div>Loading...</div>;
     }
@@ -53,14 +89,30 @@ export default function VerifyEmailPage() {
         <div className="flex items-center justify-center min-h-screen bg-gray-50">
             <div className="bg-white shadow-md p-6 rounded-md text-center max-w-md">
                 <h1 className="mb-4 text-2xl font-bold">Verify Your Email</h1>
-                <p className="mb-6">
-                    Please click the button below to verify your email address.
+                <p className="mb-4">
+                    Enter the verification code sent to your .edu email address.
                 </p>
+                <input
+                    type="text"
+                    placeholder="Enter verification code"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value)}
+                    className="w-full mb-4 px-4 py-2 border rounded-md"
+                />
+                {errorMessage && (
+                    <p className="mb-4 text-red-500 text-sm">{errorMessage}</p>
+                )}
                 <button
                     onClick={handleVerify}
-                    className="bg-black text-white hover:bg-gray-700 w-full py-2 rounded-md"
+                    className="bg-black text-white hover:bg-gray-700 w-full py-2 rounded-md mb-4"
                 >
                     Verify Email
+                </button>
+                <button
+                    onClick={handleExit}
+                    className="bg-gray-300 text-black hover:bg-gray-400 w-full py-2 rounded-md"
+                >
+                    Exit
                 </button>
             </div>
         </div>

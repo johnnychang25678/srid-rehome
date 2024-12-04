@@ -24,6 +24,7 @@ export function updateItems(items: Item[]) {
 }
 
 export function getUserByUsername(username: string): Profile | undefined {
+  if (typeof window === "undefined") return undefined; // Ensure this only runs on the client
   const profilesJson = localStorage.getItem("users");
   if (profilesJson) {
     const profiles = JSON.parse(profilesJson);
@@ -36,7 +37,8 @@ export function getUserByUsername(username: string): Profile | undefined {
   return undefined;
 }
 
-export function getUsers(): Profile[] {
+export function getUsers(): Profile[] | undefined {
+  if (typeof window === "undefined") return undefined; // Ensure this only runs on the client
   const profilesJson = localStorage.getItem("users");
   if (profilesJson) {
     return JSON.parse(profilesJson);
@@ -46,6 +48,7 @@ export function getUsers(): Profile[] {
 }
 
 export function getCurrentUser(): Profile | undefined {
+  if (typeof window === "undefined") return undefined; // Ensure this only runs on the client
   const profilesJson = localStorage.getItem("users");
   if (profilesJson) {
     const profiles = JSON.parse(profilesJson);

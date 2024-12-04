@@ -3,25 +3,28 @@
 import { getUserByUsername, getCurrentUser } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import {useEffect, useState} from "react";
 
 export default function Page({ params }: { params: { username: string } }) {
+
+    const [profile, setProfile] = useState(null);
+    const [isCurrentUser, setIsCurrentUser] = useState(false);
+
     const username = params.username;
 
-    const profile = getUserByUsername(username as string);
-    const currentUser = getCurrentUser();
+    useEffect(() => {
+        const user = getUserByUsername(username as string)
+        const currentUser = getCurrentUser();
+
+        setProfile(user);
+        setIsCurrentUser(currentUser && currentUser.username === user.username);
+
+    }, []);
+
 
     if (!profile) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-gray-50">
-                <h1 className="text-red-500 text-center text-2xl font-semibold">
-                    Profile not found!
-                </h1>
-            </div>
-        );
+        return <div>Loading...</div>;
     }
-
-    // Check if the current user is viewing their own profile
-    const isCurrentUser = currentUser && currentUser.username === profile.username;
 
     return (
         <div className="flex items-start justify-center min-h-screen bg-gray-50">

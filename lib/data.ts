@@ -77,31 +77,31 @@ export const moreMockItems: Item[] = [
 export const mockUsers: Profile[] = [
   {
     verified: true,
-    email: "johndoe@example.com",
+    email: "johndoe@example.edu",
     username: "JohnDoe",
     avatar: "https://randomuser.me/api/portraits/men/1.jpg",
   },
   {
     verified: false,
-    email: "janedoe@example.com",
+    email: "janedoe@example.edu",
     username: "JaneDoe",
     avatar: "https://randomuser.me/api/portraits/women/2.jpg",
   },
   {
     verified: true,
-    email: "mikejones@example.com",
+    email: "mikejones@example.edu",
     username: "Mike Jones",
     avatar: "https://randomuser.me/api/portraits/men/3.jpg",
   },
   {
     verified: false,
-    email: "sarahsmith@example.com",
+    email: "sarahsmith@example.edu",
     username: "SarahSmith",
     avatar: "https://randomuser.me/api/portraits/women/4.jpg",
   },
   {
     verified: false,
-    email: "alexjohnson@example.com",
+    email: "alexjohnson@example.edu",
     username: "AlexJohnson",
     avatar: "https://randomuser.me/api/portraits/men/5.jpg",
   },

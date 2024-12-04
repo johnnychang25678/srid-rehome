@@ -6,25 +6,29 @@ import { useEffect } from "react";
 import { mockUsers } from "@/lib/data";
 
 export default function RootLayout({
-  children,
-}: {
+                                     children,
+                                   }: {
   children: React.ReactNode;
 }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem("users", JSON.stringify(mockUsers));
-      localStorage.setItem(
-        "user",
-        JSON.stringify(mockUsers[mockUsers.length - 1])
-      );
+      if (!localStorage.getItem("users")) {
+        localStorage.setItem("users", JSON.stringify(mockUsers));
+      }
+      if (!localStorage.getItem("user")) {
+        localStorage.setItem(
+            "user",
+            JSON.stringify(mockUsers[mockUsers.length - 1])
+        );
+      }
     }
   }, []);
 
   return (
-    <html lang="en">
+      <html lang="en">
       <body>
-        <Layout>{children}</Layout>
+      <Layout>{children}</Layout>
       </body>
-    </html>
+      </html>
   );
 }

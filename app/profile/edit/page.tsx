@@ -1,17 +1,16 @@
-// pages/profile/edit.js
 "use client";
 
 import { useState, useEffect } from "react";
-import {getCurrentUser, getUsers} from "@/lib/utils";
-import {useRouter} from "next/navigation";
+import { getCurrentUser, getUsers } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function EditProfilePage() {
     const [profile, setProfile] = useState(null);
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [avatar, setAvatar] = useState("");
-    const router = useRouter(); // Initialize useRouter
-
+    const [error, setError] = useState(""); // State for error messages
+    const router = useRouter();
 
     useEffect(() => {
         const currentUser = getCurrentUser();
@@ -21,9 +20,45 @@ export default function EditProfilePage() {
         setAvatar(currentUser.avatar);
     }, []);
 
+    const handleUsernameChange = (e) => {
+        const input = e.target.value;
+        // Prevent spaces in the username
+        if (/\s/.test(input)) {
+            setError("Username cannot contain spaces.");
+        } else {
+            setError(""); // Clear error if input is valid
+        }
+        setUsername(input); // Automatically remove spaces
+    };
+
+    const handleEmailChange = (e) => {
+        const input = e.target.value;
+
+        // Ensure email ends with .edu
+        if (!input.endsWith(".edu")) {
+            setError("Only .edu email addresses are allowed.");
+        } else {
+            setError(""); // Clear error if input is valid
+        }
+        setEmail(input);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const storedUsers = getUsers()
+
+        // Validate email one more time before submission
+        if (!email.endsWith(".edu")) {
+            setError("Only .edu email addresses are allowed.");
+            return;
+        }
+
+        // Validate username for spaces one more time before submission
+        if (/\s/.test(username)) {
+            setError("Username cannot contain spaces.");
+            return;
+        }
+
+        const storedUsers = getUsers();
         let updatedCurrentUser = getCurrentUser();
         updatedCurrentUser.username = username;
         updatedCurrentUser.avatar = avatar;
@@ -34,9 +69,9 @@ export default function EditProfilePage() {
                 if (user.email !== email) {
                     updatedCurrentUser.verified = false;
                 }
-                return updatedCurrentUser
+                return updatedCurrentUser;
             } else {
-                return user
+                return user;
             }
         });
 
@@ -45,7 +80,6 @@ export default function EditProfilePage() {
 
         // Redirect to the profile page without refreshing
         router.push(`/profile/${username}`);
-
     };
 
     if (!profile) {
@@ -66,10 +100,15 @@ export default function EditProfilePage() {
                     <input
                         type="text"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        className="w-full border border-gray-300 rounded-md p-2"
+                        onChange={handleUsernameChange}
+                        className={`w-full border ${
+                            error && error.includes("Username") ? "border-red-500" : "border-gray-300"
+                        } rounded-md p-2`}
                         required
                     />
+                    {error && error.includes("Username") && (
+                        <p className="text-red-500 text-sm mt-1">{error}</p>
+                    )}
                 </div>
 
                 {/* Email Field */}
@@ -78,10 +117,15 @@ export default function EditProfilePage() {
                     <input
                         type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full border border-gray-300 rounded-md p-2"
+                        onChange={handleEmailChange}
+                        className={`w-full border ${
+                            error && error.includes("email") ? "border-red-500" : "border-gray-300"
+                        } rounded-md p-2`}
                         required
                     />
+                    {error && error.includes("email") && (
+                        <p className="text-red-500 text-sm mt-1">{error}</p>
+                    )}
                 </div>
 
                 {/* Avatar URL Field */}
@@ -101,6 +145,12 @@ export default function EditProfilePage() {
                     className="bg-black text-white hover:bg-gray-700 w-full py-2 rounded-md"
                 >
                     Save Changes
+                </button>
+                <button
+                    className="bg-gray-300 text-black hover:bg-gray-400 w-full py-2 rounded-md my-2"
+                    onClick={() => router.back()}
+                >
+                    Exit
                 </button>
             </form>
         </div>
