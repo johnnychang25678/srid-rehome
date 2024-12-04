@@ -53,16 +53,6 @@ export default function Page({ params }: { params: { id: string } }) {
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
               {item.name}
             </h1>
-            {item.verified && (
-              <div className="mt-3">
-                <Badge
-                  variant="secondary"
-                  className="bg-green-300 text-green-900"
-                >
-                  Verified Student
-                </Badge>
-              </div>
-            )}
 
             <div className="mt-3">
               <h2 className="sr-only">Product information</h2>
@@ -99,14 +89,47 @@ export default function Page({ params }: { params: { id: string } }) {
                 >
                   <HeartIcon
                     aria-hidden="true"
-                    className={`size-6 shrink-0 ${isFavorite ? "text-yellow-500" : ""
-                      }`}
+                    className={`size-6 shrink-0 ${
+                      isFavorite ? "text-yellow-500" : ""
+                    }`}
                   />
                 </Button>
               </div>
             </form>
 
-            <section aria-labelledby="details-heading" className="mt-12">
+            <section className="mt-6">
+              <div className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
+                <div className="shrink-0">
+                  <Image
+                    alt=""
+                    src="https://randomuser.me/api/portraits/men/1.jpg"
+                    className="size-10 rounded-full"
+                    width={60}
+                    height={60}
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <a href="#" className="focus:outline-none">
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    <p className="text-sm font-medium text-gray-900">JohnDoe</p>
+                    <p className="truncate text-sm text-gray-500">
+                      {item.verified && (
+                        <div className="mt-3">
+                          <Badge
+                            variant="secondary"
+                            className="bg-green-300 text-green-900"
+                          >
+                            Verified Student
+                          </Badge>
+                        </div>
+                      )}
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            <section aria-labelledby="details-heading" className="mt-6">
               <h2 id="details-heading" className="sr-only">
                 Additional details
               </h2>
