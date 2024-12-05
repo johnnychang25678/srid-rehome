@@ -28,17 +28,12 @@ export default function MyListings() {
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
   }
-  //   return (
-  //     <div>
-  //       <h1 className="text-2xl font-bold">My Listings</h1>
-  //       <p className="mt-2 text-gray-600">xxx</p>
-  //     </div>
   return (
     <div className="bg-white">
       <div className="max-w-2xl px-4">
         <div className="flex justify-start items-center gap-x-2">
           <h1 className="text-left text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Listings
+            My Listings
           </h1>
         </div>
 
@@ -50,29 +45,27 @@ export default function MyListings() {
               console.log(item);
               if (!item) return null;
               return (
-                <Link href={`/sell-items/item-info-filling`} key={item.id}>
-                  <Card className="mt-4">
-                    <CardHeader>
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={300}
-                        height={160}
-                        className="w-full h-40 object-cover rounded-md"
-                      />
-                    </CardHeader>
-                    <CardContent>
-                      <CardTitle className="mb-2">{item.name}</CardTitle>
-                      <CardDescription className="flex flex-col justify-between">
-                        <span>Price: ${item.price}</span>
+                <Card className="mt-4">
+                  <CardHeader>
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={300}
+                      height={160}
+                      className="w-full h-40 object-cover rounded-md"
+                    />
+                  </CardHeader>
+                  <CardContent>
+                    <CardTitle className="mb-2">{item.name}</CardTitle>
+                    <CardDescription className="flex flex-col justify-between">
+                      <span>Price: ${item.price}</span>
 
-                        <span>
-                          Post Date: {formatTimestamp(listing.timestamp)}
-                        </span>
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </Link>
+                      <span>
+                        Post Date: {formatTimestamp(listing.timestamp)}
+                      </span>
+                    </CardDescription>
+                  </CardContent>
+                </Card>
               );
             })}
           </section>

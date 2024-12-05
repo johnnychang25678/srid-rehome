@@ -44,30 +44,28 @@ export default function MyOrders() {
               // const item = getItemById(order.id);
               // if (!item) return null;
               return (
-                <Link href={`/marketplace/${order.id}`} key={order.id}>
-                  <Card className="mt-4">
-                    <CardHeader>
-                      <Image
-                        src={order.image}
-                        alt={order.name}
-                        width={300}
-                        height={160}
-                        className="w-full h-40 object-cover rounded-md"
-                      />
-                    </CardHeader>
-                    <CardContent>
-                      <CardTitle className="mb-2">{order.name}</CardTitle>
-                      <CardDescription className="flex flex-col justify-between">
-                        <span>Price: ${order.price}</span>
-                        <span>Quantity: {order.count}</span>
-                        <span>
-                          Order Date: {formatTimestamp(order.timestamp)}
-                        </span>
-                        <span>Status: {order.furnishRequested ? "Requested for Furnishing Service" : "Preparing for shipping"} </span>
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </Link>
+                <Card className="mt-4">
+                  <CardHeader>
+                    <Image
+                      src={order.image}
+                      alt={order.name}
+                      width={300}
+                      height={160}
+                      className="w-full h-40 object-cover rounded-md"
+                    />
+                  </CardHeader>
+                  <CardContent>
+                    <CardTitle className="mb-2">{order.name}</CardTitle>
+                    <CardDescription className="flex flex-col justify-between">
+                      <span>Price: ${order.price}</span>
+                      <span>Quantity: {order.count}</span>
+                      <span>
+                        Order Date: {formatTimestamp(order.timestamp)}
+                      </span>
+                      <span>Status: {order.furnishRequested ? "Requested for Furnishing Service" : "Preparing for shipping"} </span>
+                    </CardDescription>
+                  </CardContent>
+                </Card>
               );
             })}
           </section>
