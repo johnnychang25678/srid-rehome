@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, LineChart, User, Package, Star, Store } from "lucide-react";
+import { ShoppingCart, LineChart, User, Package, Star, Store, Wrench } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -76,6 +76,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       </p>
                       <p className="text-xs text-gray-600 font-roboto">
                         List your second hand items here
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/furnishing-service">
+                  <div className="flex items-center space-x-3">
+                    <Wrench className="h-5 w-5 text-gray-700" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">
+                        Request for furnishing service
+                      </p>
+                      <p className="text-xs text-gray-600 font-roboto">
+                        Request for furnishing service for your ordered items!
                       </p>
                     </div>
                   </div>
