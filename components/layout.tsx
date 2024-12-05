@@ -9,14 +9,26 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, LineChart, User, Package, Star, Store, Wrench } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-
+  const router = useRouter();
+  const pathname = usePathname()
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navbar */}
       <header className="sticky top-0 z-50 bg-white shadow p-4">
         <div className="flex justify-between items-center max-w-6xl mx-auto">
+          {
+            (pathname !== "/") && (
+              <Button
+                variant="outline"
+                onClick={() => router.back()}
+              >
+                Back
+              </Button>
+            )
+          }
           <Link
             href="/"
             className="text-black text-lg font-bold hover:underline focus:outline-none"

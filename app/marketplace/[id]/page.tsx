@@ -77,7 +77,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   onClick={addCartItem}
                   className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                 >
-                  Add to bag
+                  Add to Shopping Cart
                 </Button>
 
                 <Button
@@ -108,7 +108,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <a href="#" className="focus:outline-none">
+                  <button className="focus:outline-none">
                     <span aria-hidden="true" className="absolute inset-0" />
                     <p className="text-sm font-medium text-gray-900">JohnDoe</p>
                     <p className="truncate text-sm text-gray-500">
@@ -123,7 +123,7 @@ export default function Page({ params }: { params: { id: string } }) {
                         </div>
                       )}
                     </p>
-                  </a>
+                  </button>
                 </div>
               </div>
             </section>

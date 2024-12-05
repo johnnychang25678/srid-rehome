@@ -39,13 +39,13 @@ export default function MyListings() {
 
         <form>
           <section>
-            {listing.map((listing) => {
+            {listing.map((listing, idx) => {
               //   const item = getItemById(listing.id);
               const item = listing;
-              console.log(item);
+              // console.log(item);
               if (!item) return null;
               return (
-                <Card className="mt-4">
+                <Card className="mt-4" key={idx}>
                   <CardHeader>
                     <Image
                       src={item.image}
