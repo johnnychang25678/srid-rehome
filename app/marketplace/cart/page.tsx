@@ -9,6 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -31,6 +37,9 @@ export default function Page() {
     });
     setPrice(price);
   }, [cart]);
+
+  const isCartEmpty = Object.keys(cart).length === 0 || 
+                      Object.values(cart).every((quantity) => quantity === 0);
 
   return (
     <div className="bg-white">
@@ -91,12 +100,27 @@ export default function Page() {
             </div>
 
             <div className="mt-4">
-              <Link
-                href="/marketplace/cart/checkout"
-                className={`${buttonVariants()} w-full rounded-md border border-transparent px-4 py-3 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50`}
-              >
-                Checkout
-              </Link>
+              {isCartEmpty ? (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="default"
+                      className="w-full cursor-not-allowed opacity-50"
+                    >
+                      Checkout
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent side="top" align="center">
+                    <p>Your cart is empty. Add items to proceed to checkout.</p>
+                  </PopoverContent>
+                </Popover>
+              ) : (
+                <Link href="/marketplace/cart/checkout">
+                  <Button variant="default" className="w-full">
+                    Checkout
+                  </Button>
+                </Link>
+              )}
             </div>
 
             <div className="mt-6 text-center text-sm">

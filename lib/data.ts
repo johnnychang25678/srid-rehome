@@ -6,7 +6,7 @@ export const mockItems: Item[] = [
     name: "Table",
     price: 40,
     image: "/images/table.jpeg",
-    description: "a table",
+    description: "A sturdy wooden table ideal for dining or multipurpose use in small spaces.",
     verified: false,
     qas: [
       {
@@ -26,7 +26,7 @@ export const mockItems: Item[] = [
     name: "Chair",
     price: 20,
     image: "/images/chair.jpeg",
-    description: "a chair",
+    description: "A sleek wooden chair with a comfortable black cushion, perfect for dining or casual seating.",
     verified: true,
     qas: [
       {
@@ -41,7 +41,7 @@ export const mockItems: Item[] = [
     name: "Couch",
     price: 120,
     image: "/images/sofa.jpeg",
-    description: "a couch",
+    description: "A modern, gray fabric couch offering comfortable seating for a living room setup.",
     verified: true,
     qas: [
       {
@@ -59,7 +59,7 @@ export const moreMockItems: Item[] = [
     name: "TV Stand",
     price: 60,
     image: "/images/tvstand.jpeg",
-    description: "a tv stand",
+    description: "A stylish gray TV stand with ample storage and an integrated electric fireplace feature, perfect for adding warmth and functionality to your living space.",
     verified: true,
     qas: [],
   },
@@ -68,7 +68,7 @@ export const moreMockItems: Item[] = [
     name: "Bed",
     price: 90,
     image: "/images/bed.jpeg",
-    description: "a bed",
+    description: "A sophisticated bed frame with a tufted headboard in dark gray, offering a modern and cozy centerpiece for any bedroom.",
     verified: true,
     qas: [],
   },

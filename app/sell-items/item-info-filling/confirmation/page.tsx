@@ -25,7 +25,7 @@ export default function FinalizeListing() {
       id: listings.length + 1,
       name: "Red Chair",
       price: 10,
-      description: "This is a sturdy chair.",
+      description: "A robust, outdoor-style wooden chair perfect for patios or gardens.",
       image: "/images/red_chair.png",
       timestamp: Date.now(),
     };
