@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { getCart, getItemById } from "@/lib/utils";
+import { getCart, getItemById, storeCart } from "@/lib/utils";
 
 export default function Page() {
   const [cart, setCart] = useState<Record<number, number>>({});
@@ -38,8 +38,20 @@ export default function Page() {
     setPrice(price);
   }, [cart]);
 
-  const isCartEmpty = Object.keys(cart).length === 0 || 
-                      Object.values(cart).every((quantity) => quantity === 0);
+  const isCartEmpty = Object.keys(cart).length === 0 ||
+    Object.values(cart).every((quantity) => quantity === 0);
+
+  const handleRemove = (id: number) => {
+    setCart((prevCart: Record<number, number>) => {
+      const updatedCart = { ...prevCart };
+      updatedCart[id]--;
+      if (updatedCart[id] === 0) {
+        delete updatedCart[id]
+      }
+      storeCart(updatedCart)
+      return updatedCart;
+    })
+  }
 
   return (
     <div className="bg-white">
@@ -58,28 +70,38 @@ export default function Page() {
               const item = getItemById(parseInt(id));
               if (!item) return null;
               return (
-                <Link href={`/marketplace/${item.id}`} key={item.id}>
-                  <Card className="mt-4">
-                    <CardHeader>
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={300}
-                        height={160}
-                        className="w-full h-40 object-cover rounded-md"
-                      />
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="mb-2">
-                        {item.name}
-                      </CardDescription>
-                      <CardTitle className="flex justify-between">
-                        <span>${item.price}</span>
-                        <span>x{quantity}</span>
-                      </CardTitle>
-                    </CardContent>
-                  </Card>
-                </Link>
+                <div>
+                  <Link href={`/marketplace/${item.id}`} key={item.id}>
+                    <Card className="mt-4">
+                      <CardHeader>
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={300}
+                          height={160}
+                          className="w-full h-40 object-cover rounded-md"
+                        />
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription className="mb-2">
+                          {item.name}
+                        </CardDescription>
+                        <CardTitle className="flex justify-between">
+                          <span>${item.price}</span>
+                          <span>x{quantity}</span>
+                        </CardTitle>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                  <div className="text-right">
+                    <Button
+                      className="mt-2"
+                      type="button"
+                      variant="outline"
+                      onClick={() => handleRemove(item.id)}
+                    >Remove one {item.name} from cart</Button>
+                  </div>
+                </div>
               );
             })}
           </section>
