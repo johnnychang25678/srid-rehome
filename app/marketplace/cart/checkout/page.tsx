@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -23,6 +23,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { getCart, getItemById, storeCart, storeOrders } from "@/lib/utils";
 import { Order } from "@/lib/types";
+import { set } from "react-hook-form";
 
 export default function Page() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -32,6 +33,7 @@ export default function Page() {
   const [nameError, setNameError] = useState(false);
   const [addressError, setAddressError] = useState(false);
   const [mobileError, setMobileError] = useState(false);
+  const [confirmDialog, setConfirmDialog] = useState(false);
 
   function handleSubmit() {
     let valid = true;
@@ -158,17 +160,44 @@ export default function Page() {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Order Placed Successfully</DialogTitle>
+              <DialogTitle>
+                {confirmDialog ? "Order Placed Successfully" : "Are you sure?"}
+              </DialogTitle>
               <DialogDescription className="flex flex-col">
-                <span>An invoice has been sent to your email address.</span>
-                <span className="flex justify-between mt-4">
-                  <Link href="/marketplace" className={`${buttonVariants()}`}>
-                    Continue Shopping
-                  </Link>
-                  <Link href="/my-orders" className={`${buttonVariants()}`}>
-                    View My Orders
-                  </Link>
-                </span>
+                {confirmDialog ? (
+                  <>
+                    <span>An invoice has been sent to your email address.</span>
+                    <span className="flex justify-between mt-4">
+                      <Link
+                        href="/marketplace"
+                        className={`${buttonVariants()}`}
+                      >
+                        Continue Shopping
+                      </Link>
+                      <Link href="/my-orders" className={`${buttonVariants()}`}>
+                        View My Orders
+                      </Link>
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span>Are you sure you want to place the order?</span>
+                    <span className="flex justify-between mt-4">
+                      <Button
+                        type="button"
+                        onClick={() => setIsDialogOpen(false)}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={() => setConfirmDialog(true)}
+                      >
+                        Place Order
+                      </Button>
+                    </span>
+                  </>
+                )}
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
