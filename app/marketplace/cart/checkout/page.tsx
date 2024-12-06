@@ -23,7 +23,6 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { getCart, getItemById, storeCart, storeOrders } from "@/lib/utils";
 import { Order } from "@/lib/types";
-import { set } from "react-hook-form";
 
 export default function Page() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -37,6 +36,8 @@ export default function Page() {
 
   function handleSubmit() {
     let valid = true;
+    const mobileRegex = /^[0-9]+$/;
+
     if (!name) {
       setNameError(true);
       valid = false;
@@ -49,7 +50,7 @@ export default function Page() {
     } else {
       setAddressError(false);
     }
-    if (!mobile) {
+    if (!mobile || mobile.length !== 10 || !mobileRegex.test(mobile)) {
       setMobileError(true);
       valid = false;
     } else {
@@ -142,7 +143,9 @@ export default function Page() {
                 onChange={(e) => setMobile(e.target.value)}
               />
               {mobileError && (
-                <span className="text-red-500 text-sm">Mobile is required</span>
+                <span className="text-red-500 text-sm">
+                  Mobile is required or mobile is invalid
+                </span>
               )}
             </div>
           </div>
