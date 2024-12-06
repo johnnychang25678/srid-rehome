@@ -144,7 +144,7 @@ export default function Page() {
               />
               {mobileError && (
                 <span className="text-red-500 text-sm">
-                  Mobile is required or mobile is invalid
+                  Mobile is required or mobile is invalid, must be 10 digits
                 </span>
               )}
             </div>
